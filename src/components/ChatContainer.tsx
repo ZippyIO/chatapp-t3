@@ -1,19 +1,33 @@
-import { useState } from "react";
-import { api } from "~/utils/api";
+import { useState } from 'react';
+import { api } from '~/utils/api';
 
 const ChatContainer = () => {
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
+
+  const { data: chatMessages, refetch: refetchChatMessages } = api.chat.getAll.useQuery();
 
   const createMessage = api.chat.create.useMutation({
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      void refetchChatMessages();
     },
   });
 
   return (
     <>
-      <div className="h-1/2 w-1/3">
-        <div className="container h-full w-full bg-neutral"></div>
+      <div className="w-1/2 rounded-lg bg-neutral p-2">
+        <div className="h-[40rem]">
+          <ul className="flex flex-col gap-2">
+            {chatMessages?.map((message) => (
+              <li key={message.id} className="flex items-center gap-2 border-b border-base-200 p-2">
+                <img src={message.authorImage} alt="" className="w-8 rounded-full" />
+                <span>
+                  <p className="text-xs font-bold text-slate-400">{message.authorName}</p>
+                  {message.content}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
         <form
           action=""
           onSubmit={(e) => {
@@ -21,8 +35,9 @@ const ChatContainer = () => {
             createMessage.mutate({
               content: message,
             });
+            setMessage('');
           }}
-          className=""
+          className="flex gap-2 p-2"
         >
           <input
             type="text"
@@ -31,9 +46,10 @@ const ChatContainer = () => {
             placeholder="Type your message here..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            autoComplete="off"
             className="input-bordered input w-5/6 border-2"
           />
-          <button className="btn-primary btn w-1/6" type="submit">
+          <button className="btn-secondary btn w-1/6" type="submit">
             Send
           </button>
         </form>
