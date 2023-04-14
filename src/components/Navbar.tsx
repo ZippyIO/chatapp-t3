@@ -4,10 +4,8 @@ const Navbar = () => {
   const { data: sessionData } = useSession();
 
   return (
-    <div className="navbar bg-primary text-primary-content">
-      <div className="flex-1 pl-5 text-3xl font-bold">
-        {sessionData?.user?.name ? `Notes for ${sessionData.user.name}` : ""}
-      </div>
+    <header className="navbar bg-neutral-focus text-base-content">
+      <h1 className="flex-1 pl-5 text-3xl font-bold text-primary">Chat App</h1>
       <div className="flex-none gap-2">
         <div className="dropdown-end dropdown">
           {sessionData?.user ? (
@@ -33,7 +31,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 export default Navbar;
