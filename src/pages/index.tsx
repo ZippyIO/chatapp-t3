@@ -1,8 +1,8 @@
-import { type NextPage } from "next";
-import Head from "next/head";
+import { type NextPage } from 'next';
+import Head from 'next/head';
 
-import ChatContainer from "~/components/ChatContainer";
-import Navbar from "~/components/Navbar";
+import ChatContainer from '~/components/ChatContainer';
+import Navbar from '~/components/Navbar';
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +13,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="h-screen">
+      <main className="flex justify-center pt-12">
         <ChatContainer />
       </main>
     </>
