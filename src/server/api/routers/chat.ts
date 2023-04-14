@@ -3,6 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const chatRouter = createTRPCRouter({
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.message.findMany();
+  }),
   create: protectedProcedure
     .input(z.object({ content: z.string() }))
     .mutation(async ({ ctx, input }) => {
