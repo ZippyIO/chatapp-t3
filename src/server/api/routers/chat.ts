@@ -9,7 +9,8 @@ export const chatRouter = createTRPCRouter({
       return ctx.prisma.message.create({
         data: {
           content: input.content,
-          authorId: ctx.session.user.id,
+          authorName: ctx.session.user.name as string,
+          authorImage: ctx.session.user.image as string,
         },
       });
     }),
